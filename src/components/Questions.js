@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import { makeStyles } from "@mui/styles";
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -12,7 +13,24 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 
 
-export default function Questions() {
+const usestyle = makeStyles({
+  scorebox : { 
+      height:"100vh",
+       display:"flex" , 
+       flexDirection : "column" ,
+       alignItems : "center",
+       justifyContent : "center",
+  },
+  scorebar: { width: 200, height: 200 , margin : "20px auto" },
+  scoreboard : {width:"fit-content"  ,alignItems:"center" , fontSize: "23px", fontFamily: "cursive" , fontWeight : "500" , margin : "20px auto"}
+
+})
+
+
+export default function Questions(props) {
+
+  const classes = usestyle()
+
   const steps = [
     {
       label: "Which one is correct team name in NBA?",
@@ -94,6 +112,7 @@ export default function Questions() {
 
   return (
     <>
+    {chart===true?"":
     <Box sx={{ width: "70vw",border: "1px solid",padding: "10px 30px",minWidth : "300px",flexGrow: 1 , margin: "20px auto" }}>
       <Paper
         square
@@ -106,7 +125,7 @@ export default function Questions() {
           bgcolor: 'background.default',
         }}
       >
-        <Typography>{steps[activeStep].label}</Typography>
+        <Typography>{`${activeStep+1} . ${steps[activeStep].label}`}</Typography>
       </Paper>
       <FormControl component="fieldset">
       <RadioGroup
@@ -156,9 +175,13 @@ export default function Questions() {
         }
       />
     </Box>
+}
     {chart===true?
-    <div style={{ width: 200, height: 200 , margin : "20px auto" }}>
+    <div className={classes.scorebox}>
+    <div className={classes.scorebar}>
         <CircularProgressbar value={`${value * 20}`} text={`${value * 20}%`} />
+      </div>
+      <h1 className={classes.scoreboard}>HI! {props.name} You Have Scored {value} out of 5</h1>
       </div>:""}
       </>
   );

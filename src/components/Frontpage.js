@@ -125,7 +125,7 @@ const Frontpage = () => {
         </Box>
       </div>
       <div className="questionpage">
-        <Questions />
+        <Questions name={name}/>
       </div>
     </>
   );
